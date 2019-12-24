@@ -8,6 +8,13 @@
     "test": "test"
   },
   "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "fs": "0.0.1-security",
+    "https": "^1.0.0",
+    "morgan": "^1.9.1",
+    "querystring": "^0.2.0",
     "sunburst": "^2.0.0"
   },
   "devDependencies": {},

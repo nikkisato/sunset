@@ -1,44 +1,24 @@
-// Load Environment Variables from the .env file
 require('dotenv').config();
 
-// Application Dependencies
+const SunburstJS = require('sunburst');
 const express = require('express');
-const cors = require('cors');
-const morgan = require('morgan');
-// Database Client
-const client = require('./lib/client');
-// Services
-const charactersApi = require('./lib/characters-api');
 
-
-
-// Application Setup
 const app = express();
 const PORT = process.env.PORT;
-app.use(morgan('dev')); 
-app.use(cors()); 
 app.use(express.static('public')); 
 app.use(express.json()); 
 
-// // setup authentication routes
-// app.use('/api/auth', authRoutes);
-
-// // everything that starts with "/api" below here requires an auth token!
-// app.use('/api', ensureAuth);
-
 // *** API Routes ***
 app.get('/v1/quality', async (req, res) => {
-
     try {
         const resp = await sunburst.quality({
-            geo: [40.7933949, -77.8600012]
+            geo: [45.512794, -122.679565],
         });
         features.forEach(({ geometry, properties }) => {
             const { coordinates } = geometry;
             console.log({ coordinates, properties });
         });
     } catch (ex) {
-        // Handle general network or parsing errors.
         return console.error(ex);
     }
 });
@@ -87,19 +67,17 @@ app.post('/v1/quality', async (req, res) => {
 });
 
 
-const stringHash = require('string-hash');
-
 app.post('/v1/login', async (req, res) => {
     try {
         const sunburst = new SunburstJS();
       
         const session = await sunburst.createSession({
-            email: 'email@example.com',
-            password: '2fHYO3Ked(ez$G4bBg',
+            email: PROCESS.ENV.EMAIL,
+            password: PROCESS.ENV.PASSWORD,
             type: 'permanent',
-            scope: ['predictions']
+            scope: ['predictions'],
+            Bearer: '6340beaa-7279-4055-a6ec-fc9422ee0ad8'
         });
-      
         console.log(session);
       
     } catch (ex) {
@@ -113,7 +91,8 @@ app.post('/v1/login/session', (req, res) => {
     let sunburst = new SunburstJS({
         clientId: 'f78fe615-8eb1-48c4-be21-e5f4f437e8ba',
         clientSecret: '18qwl0htsPX|[!NGQ@[qK{X;[&^EVzaH',
-        scope: ['predictions']
+        scope: ['predictions'],
+        Bearer: '6340beaa-7279-4055-a6ec-fc9422ee0ad8'
     });
 });
 
